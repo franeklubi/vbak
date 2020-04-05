@@ -7,20 +7,14 @@
 #include "./config.h"
 
 
-uint32_t readValue(FILE* f) {
-    uint32_t i;
-    fscanf(f, "%i", &i);
-    return i;
-}
-
-
 uint32_t readFromFile(char* filename) {
     FILE* f = fopen(filename, "r");
     if ( f == NULL ) {
         exit(EXIT_FAILURE);
     }
 
-    uint32_t val = readValue(f);
+    uint32_t val;
+    fscanf(f, "%i", &val);
 
     int c = fclose(f);
     if ( c == EOF ) {
