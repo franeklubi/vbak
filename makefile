@@ -3,11 +3,14 @@ ifndef VERBOSE
 .SILENT:
 endif
 
+ARG=10
 
 main: main.c
 	gcc -o vbak main.c
 
 run: main.c
 	make 1> /dev/null
-	./vbak 15
-	rm vbak
+	sudo chown root:root ./vbak
+	sudo chmod +s ./vbak
+	./vbak $(ARG)
+	rm vbak -f
