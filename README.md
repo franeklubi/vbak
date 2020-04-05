@@ -5,6 +5,7 @@
 $ vbak      ; output: current backlight percentage
 $ vbak 20   ; sets backlight to 20%
 $ vbak +10  ; adds 10% to backlight
+$ vbak -10  ; subtracts 10% from backlight
 ```
 
 ### Installation:
