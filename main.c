@@ -32,8 +32,14 @@ uint32_t readFromFile(char* filename) {
 
 
 int main(int argc, char** argv) {
+    int32_t max_brightness, brightness, percentage;
+    max_brightness = readFromFile(BACKLIGHT_PATH"max_brightness");
+    brightness = readFromFile(BACKLIGHT_PATH"brightness");
+    percentage = (brightness*100/max_brightness);
+
     if ( argc == 1 ) {
-        exit(EXIT_FAILURE);
+        printf("%i\n", percentage);
+        return 0;
     }
     #define arg argv[1]
 
@@ -45,9 +51,6 @@ int main(int argc, char** argv) {
         }
     }
 
-    int32_t brightness, percentage, max_brightness;
-    max_brightness = readFromFile(BACKLIGHT_PATH"max_brightness");
-
     int32_t argval;
     int err = sscanf(arg, "%i", &argval);
     if ( err == EOF ) {
@@ -58,14 +61,13 @@ int main(int argc, char** argv) {
         exit(EXIT_FAILURE);
     }
 
-    percentage = argval;
-
     if ( relative ) {
-        brightness = readFromFile(BACKLIGHT_PATH"brightness");
-        percentage = (brightness*100/max_brightness)+argval;
+        percentage += argval;
         if ( percentage < 0 || percentage > 100 ) {
             exit(EXIT_FAILURE);
         }
+    } else {
+        percentage = argval;
     }
 
     brightness = percentage*max_brightness/100;
